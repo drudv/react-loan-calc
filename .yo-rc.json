@@ -1,0 +1,7 @@
+{
+  "generator-react-webpack": {
+    "appName": "reactLoanCalc",
+    "style": "scss",
+    "postcss": true
+  }
+}
