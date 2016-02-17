@@ -33,11 +33,22 @@ function saveConstraints(state, constraints) {
   });
 }
 
-function saveOffer(state, offer) {
+function saveOffer(state, amount, term, offer) {
   return state.withMutations(state => {
     state.set('monthlyPayment', offer.monthlyPayment);
     state.set('paymentTerm', offer.term);
     state.set('totalCostOfCredit', offer.totalCostOfCredit);
+  }).mergeDeep({
+    'offers': {
+      [amount]: {
+        [term]: {
+          monthlyPayment: offer.monthlyPayment,
+          totalCostOfCredit: offer.totalCostOfCredit,
+          totalPrincipal: offer.totalPrincipal,
+          totalRepayableAmount: offer.totalRepayableAmount
+        }
+      }
+    }
   });
 }
 
@@ -50,7 +61,12 @@ export default function(state = Defaults.DEFAULT_STATE, action) {
   case ActionTypes.RECEIVE_CONSTRAINTS:
     return saveConstraints(state, action.payload.constraints);
   case ActionTypes.RECEIVE_OFFER:
-    return saveOffer(state, action.payload.offer);
+    return saveOffer(
+      state,
+      action.payload.amount,
+      action.payload.term,
+      action.payload.offer
+    );
   }
   return state;
 }

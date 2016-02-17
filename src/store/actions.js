@@ -70,11 +70,11 @@ export const ActionCreators = {
     }
   },
 
-  receiveOffer(data) {
+  receiveOffer(amount, term, offer) {
     return {
       type: ActionTypes.RECEIVE_OFFER,
       payload: {
-        offer: data
+        amount, term, offer
       }
     }
   },
@@ -93,7 +93,7 @@ export const ActionCreators = {
       dispatch(ActionCreators.requestOffer(amount, term));
       return fetch(`${Defaults.LOAN_OFFER_URL}?amount=${amount}&term=${term}`)
         .then(req => req.json())
-        .then(json => dispatch(ActionCreators.receiveOffer(json)));
+        .then(json => dispatch(ActionCreators.receiveOffer(amount, term, json)));
     }
   }
 
