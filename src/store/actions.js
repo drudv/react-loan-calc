@@ -33,8 +33,8 @@ export const ActionCreators = {
 
   setAmountWithOfferUpdate(amount) {
     return (dispatch, getState) => {
-      let state = getState();
-      let term = state.get('term');
+      const state = getState();
+      const term = state.get('term');
       dispatch(ActionCreators.setAmount(amount));
       dispatch(ActionCreators.fetchOffer(amount, term));
     };
@@ -42,8 +42,8 @@ export const ActionCreators = {
 
   setTermWithOfferUpdate(term) {
     return (dispatch, getState) => {
-      let state = getState();
-      let amount = state.get('amount');
+      const state = getState();
+      const amount = state.get('amount');
       dispatch(ActionCreators.setTerm(term));
       dispatch(ActionCreators.fetchOffer(amount, term));
     };

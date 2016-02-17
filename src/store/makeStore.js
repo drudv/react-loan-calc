@@ -1,7 +1,7 @@
 import {createStore, applyMiddleware} from 'redux';
 import reducer from './reducer';
 
-export default function thunkMiddleware({ dispatch, getState }) {
+function thunkMiddleware({ dispatch, getState }) {
   return (next => 
      action => 
        typeof action === 'function' ? 

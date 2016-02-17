@@ -45,7 +45,7 @@ export default class App extends React.Component {
   }
 
   renderOffer() {
-    let {paymentTerm, totalCostOfCredit, monthlyPayment} = this.props;
+    const {paymentTerm, totalCostOfCredit, monthlyPayment} = this.props;
     if (!this.props.paymentTerm) {
       return undefined;
     }
@@ -67,9 +67,7 @@ export default class App extends React.Component {
       return this.renderLoading();
     }
 
-    console.log('props', this.props);
-
-    let {
+    const {
       amount, amountMin, amountMax, amountStep, setAmountWithOfferUpdate,
       term, termMin, termMax, termStep, setTermWithOfferUpdate,
       ...props
@@ -94,4 +92,3 @@ export default class App extends React.Component {
     );
   }
 };
-
