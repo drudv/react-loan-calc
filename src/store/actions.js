@@ -1,6 +1,7 @@
 import Immutable from 'immutable';
 import Defaults from './defaults';
 import fetch from 'isomorphic-fetch';
+import keyIn from '../utils/keyIn';
 
 export const ActionTypes = {
   SET_AMOUNT: 'SET_AMOUNT',
@@ -83,12 +84,22 @@ export const ActionCreators = {
     }
   },
 
+  initialize(constraints) {
+    return (dispatch, getState) => {
+      dispatch(ActionCreators.receiveConstraints(constraints));
+      return Promise.resolve(
+        getState().filter(keyIn('amount', 'term')).toJS() 
+      );
+    };
+  },
+
   fetchConstraints() {
     return dispatch => {
       dispatch(ActionCreators.requestConstraints());
       return fetch(Defaults.CONSTRAINT_URL)
         .then(req => req.json())
-        .then(json => dispatch(ActionCreators.receiveConstraints(json)));
+        .then(json => dispatch(ActionCreators.initialize(json)))
+        .then(({amount, term}) => dispatch(ActionCreators.fetchOffer(amount, term)));
     }
   },
 
