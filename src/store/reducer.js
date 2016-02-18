@@ -13,14 +13,22 @@ function saveConstraints(state, constraints) {
   const amount = state.get('amount');
   const term = state.get('term');
   return state.withMutations(state => {
-    state.set('amountDefault', amountInterval.defaultValue);
-    state.set('amountMax', amountInterval.max);
-    state.set('amountMin', amountInterval.min);
-    state.set('amountStep', amountInterval.step);
-    state.set('termDefault', termInterval.defaultValue);
-    state.set('termMax', termInterval.max);
-    state.set('termMin', termInterval.min);
-    state.set('termStep', termInterval.step);
+    state.mergeDeep({
+      constraints: {
+        amount: {
+          defaultValue: amountInterval.defaultValue,
+          max: amountInterval.max,
+          min: amountInterval.min,
+          step: amountInterval.step
+        },
+        term: {
+          defaultValue: termInterval.defaultValue,
+          max: termInterval.max,
+          min: termInterval.min,
+          step: termInterval.step
+        }
+      }
+    });
     state.set('amount', applyConstraints({
       ...amountInterval,
       initial: amount
@@ -29,16 +37,11 @@ function saveConstraints(state, constraints) {
       ...termInterval,
       initial: term
     }));
-    state.set('loaded', true);
   });
 }
 
 function saveOffer(state, amount, term, offer) {
-  return state.withMutations(state => {
-    state.set('monthlyPayment', offer.monthlyPayment);
-    state.set('paymentTerm', offer.term);
-    state.set('totalCostOfCredit', offer.totalCostOfCredit);
-  }).mergeDeep({
+  return state.mergeDeep({
     'offers': {
       [amount]: {
         [term]: {

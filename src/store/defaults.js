@@ -4,9 +4,10 @@ import Immutable from 'immutable';
 
 export default {
   DEFAULT_STATE: Immutable.fromJS({
-    loaded: false,
+    constraints: null,
     amount: null,
     term: null,
+    offers: {},
   }),
 
   CONSTRAINT_URL: 'https://js-developer-second-round.herokuapp.com/api/v1/application/constraints',

@@ -1,9 +1,9 @@
 import {connect} from 'react-redux';
 import App from './App';
-import mapStateToProps from '../store/mapStateToProps';
 import mapDispatchToProps from '../store/mapDispatchToProps';
+import {rootSelector} from '../store/selectors';
 
 export default connect(
-  mapStateToProps,
+  rootSelector,
   mapDispatchToProps
 )(App);

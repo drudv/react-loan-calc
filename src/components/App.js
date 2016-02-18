@@ -45,25 +45,34 @@ export default class App extends React.Component {
   }
 
   renderOffer() {
-    const {paymentTerm, totalCostOfCredit, monthlyPayment} = this.props;
-    if (!this.props.paymentTerm) {
-      return undefined;
+    const {
+      totalCostOfCredit, monthlyPayment,
+      totalPrincipal, totalRepayableAmount
+    } = this.props;
+    if (!this.props.calculated) {
+      return (
+        <div>
+          Calculating...
+        </div>
+      );
     }
     return (
       <div style={Styles.Offer}>
-        <Detail title="Payment Term"
-                value={paymentTerm} />
-        <Detail title="Total Cost of Credit"
-                value={totalCostOfCredit} />
         <Detail title="Monthly Payment"
                 value={monthlyPayment} />
+        <Detail title="Total Principal"
+                value={totalPrincipal} />
+        <Detail title="Total Repayable Amount"
+                value={totalRepayableAmount} />
+        <Detail title="Total Cost of Credit"
+                value={totalCostOfCredit} />
       </div>
     );
   }
 
   render() {
 
-    if (!this.props.loaded) {
+    if (!this.props.initialized) {
       return this.renderLoading();
     }
 

@@ -36,7 +36,9 @@ export const ActionCreators = {
       const state = getState();
       const term = state.get('term');
       dispatch(ActionCreators.setAmount(amount));
-      dispatch(ActionCreators.fetchOffer(amount, term));
+      if (!state.getIn(['offers', amount.toString(), term.toString()])) {
+        dispatch(ActionCreators.fetchOffer(amount, term));
+      }
     };
   },
 
@@ -45,7 +47,9 @@ export const ActionCreators = {
       const state = getState();
       const amount = state.get('amount');
       dispatch(ActionCreators.setTerm(term));
-      dispatch(ActionCreators.fetchOffer(amount, term));
+      if (!state.getIn(['offers', amount.toString(), term.toString()])) {
+        dispatch(ActionCreators.fetchOffer(amount, term));
+      }
     };
   },
 
